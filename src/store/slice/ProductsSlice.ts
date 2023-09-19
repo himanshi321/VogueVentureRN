@@ -45,6 +45,24 @@ const ProductSlice = createSlice({
       state.cart = cartItems;
       triggerHaptics("warning" as HapticsType);
     },
+    incrementQty(state, action: PayloadAction<number>) {
+      const cartItems = [...state.cart];
+      const index = cartItems.findIndex((item) => item.id === action.payload);
+      cartItems[index].qty += 1;
+      state.cart = cartItems;
+    },
+    decrementQty(state, action: PayloadAction<number>) {
+      const cartItems = [...state.cart];
+      const index = cartItems.findIndex((item) => item.id === action.payload);
+      cartItems[index].qty -= 1;
+      if (cartItems[index].qty === 0) {
+        cartItems.splice(index, 1);
+        state.cart = cartItems;
+        triggerHaptics("warning" as HapticsType);
+      } else {
+        state.cart = cartItems;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getProducts.pending, (state, action) => {
@@ -52,7 +70,14 @@ const ProductSlice = createSlice({
     });
     builder.addCase(getProducts.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.data = action.payload;
+      let products = [];
+      if (action.payload.length > 0) {
+        action.payload.forEach((item) => {
+          let product = { ...item, qty: 1 };
+          products.push(product);
+        });
+      }
+      state.data = products;
     });
     builder.addCase(getProducts.rejected, (state, action) => {
       state.hasError = true;
@@ -61,6 +86,12 @@ const ProductSlice = createSlice({
   },
 });
 
-export const { addToWislist, removeFromWishlist, addToCart, removeFromCart } =
-  ProductSlice.actions;
+export const {
+  addToWislist,
+  removeFromWishlist,
+  addToCart,
+  removeFromCart,
+  incrementQty,
+  decrementQty,
+} = ProductSlice.actions;
 export default ProductSlice.reducer;

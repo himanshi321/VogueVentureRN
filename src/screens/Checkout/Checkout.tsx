@@ -10,7 +10,7 @@ export default function Checkout({ navigation }) {
   const cart = useSelector((state: StoreType) => state.product.cart);
 
   const getTotalCartValue = () => {
-    let total = cart.reduce((acc, product) => acc + product.price, 0);
+    let total = cart.reduce((acc, product) => acc + (product.price * product.qty), 0);
     return total.toFixed(2);
   };
 

@@ -1,5 +1,6 @@
 import {
   ImageBackground,
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -7,8 +8,13 @@ import {
 import React from "react";
 import { Product } from "../../store/StoreType";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { removeFromCart } from "../../store/slice/ProductsSlice";
+import {
+  decrementQty,
+  incrementQty,
+  removeFromCart,
+} from "../../store/slice/ProductsSlice";
 import { useDispatch } from "react-redux";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function CheckoutCard({ product }: Props) {
   const dispatch = useDispatch();
@@ -29,6 +35,21 @@ export default function CheckoutCard({ product }: Props) {
         <Text style={styles.title}>{product.name}</Text>
         <Text style={styles.price}>${product.price}</Text>
         <Text style={styles.title}>Available Color : {product.colour}</Text>
+        <View style={styles.counter}>
+          <Pressable
+            style={styles.btnBackground}
+            onPress={() => dispatch(decrementQty(product.id))}
+          >
+            <AntDesign name="minus" size={16} color="#fff" />
+          </Pressable>
+          <Text>{product.qty}</Text>
+          <Pressable
+            style={styles.btnBackground}
+            onPress={() => dispatch(incrementQty(product.id))}
+          >
+            <AntDesign name="plus" size={16} color="#fff" />
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -48,8 +69,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   image: {
-    width: 50,
-    height: 100,
+    width: 75,
+    height: 150,
     resizeMode: "contain",
   },
   title: {
@@ -70,6 +91,19 @@ const styles = StyleSheet.create({
     right: 12,
     top: 20,
     zIndex: 1,
+  },
+  btnBackground: {
+    backgroundColor: "#36454F",
+    width: 26,
+    padding: 5,
+    borderRadius: 5,
+  },
+  counter: {
+    marginTop: 10,
+    display: "flex",
+    flexDirection: "row",
+    gap: 20,
+    alignItems: "center",
   },
 });
 
