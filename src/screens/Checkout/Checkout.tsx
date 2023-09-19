@@ -33,7 +33,7 @@ export default function Checkout({ navigation }) {
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>Total Amount</Text>
-        <Text style={styles.footerText}>${totalAmount}</Text>
+        <Text testID={`total-amount`} style={styles.footerText}>${totalAmount}</Text>
       </View>
     </>
   );

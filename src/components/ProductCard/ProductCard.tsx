@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ImageBackground,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import React, { useMemo } from "react";
 import { Product, StoreType } from "../../store/StoreType";
@@ -61,18 +62,20 @@ const ProductCard = ({ product }: Props) => {
       <Text style={styles.price}>${product.price}</Text>
       {isInCart ? (
         <Pressable
+        testID={`remove-from-cart-${product.id}`}
           style={styles.button}
           onPress={() => dispatch(removeFromCart(product.id))}
         >
           <Text style={styles.buttonText}>Remove from cart</Text>
         </Pressable>
       ) : (
-        <Pressable
-          style={styles.button}
+        <TouchableOpacity
+          testID={`add-to-cart-${product.id}`}
           onPress={() => dispatch(addToCart(product))}
+          style={styles.button}
         >
           <Text style={styles.buttonText}>Add to cart</Text>
-        </Pressable>
+        </TouchableOpacity>
       )}
     </View>
   );

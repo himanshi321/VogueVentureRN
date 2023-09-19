@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { getProducts } from "../../store/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreType } from "../../store/StoreType";
@@ -17,6 +17,7 @@ export default function Home({ navigation }) {
   return (
     <>
       <Header navigation={navigation} showBackIcon={false} />
+      <Text style={style.welcome}>Welcome to Vogue Venture</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <View style={style.cardContainer}>
@@ -44,4 +45,11 @@ const style = StyleSheet.create({
     rowGap: 12,
     padding: 12,
   },
+  welcome: {
+    textAlign: 'center',
+    padding: 5,
+    paddingTop:15,
+    letterSpacing: 2,
+    fontSize: 12
+  }
 });

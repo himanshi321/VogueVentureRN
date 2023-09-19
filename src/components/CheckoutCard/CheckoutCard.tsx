@@ -42,7 +42,7 @@ export default function CheckoutCard({ product }: Props) {
           >
             <AntDesign name="minus" size={16} color="#fff" />
           </Pressable>
-          <Text>{product.qty}</Text>
+          <Text testID={`product-qty-${product.qty}`}>{product.qty}</Text>
           <Pressable
             style={styles.btnBackground}
             onPress={() => dispatch(incrementQty(product.id))}
